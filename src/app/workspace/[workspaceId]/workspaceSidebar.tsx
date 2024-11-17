@@ -12,6 +12,8 @@ import WorkspaceHeader from "./workspaceHeader";
 import SidebarItem from "./sidebarItem";
 import useGetChannels from "@/features/channels/api/useGetChannels";
 import WorkspaceSection from "./workspaceSection";
+import UseGetMembers from "@/features/members/api/useGetMembers";
+import UserItem from "./userItem";
 
 export default function WorkspaceSidebar() {
   const workspaceId = useWorkspaceId();
@@ -24,6 +26,10 @@ export default function WorkspaceSidebar() {
   });
 
   const { data: channels, isLoading: channelsLoading } = useGetChannels({
+    workspaceId,
+  });
+
+  const { data: members, isLoading: membersLoading } = UseGetMembers({
     workspaceId,
   });
 
@@ -52,21 +58,31 @@ export default function WorkspaceSidebar() {
       <div className="flex flex-col px-2 mt-3">
         <SidebarItem label="Threads" icon={MessageSquareText} id="threads" />
         <SidebarItem label="Draft & sent" icon={SendHorizonal} id="drafts" />
-        <WorkspaceSection
-          label="Channels"
-          hint="New channel"
-          onNew={() => {}}
-        >
-          {channels?.map((item) => (
-            <SidebarItem
-              key={item._id}
-              label={item.name}
-              icon={HashIcon}
-              id={item._id}
-            />
-          ))}
-        </WorkspaceSection>
       </div>
+      <WorkspaceSection label="Channels" hint="New channel" onNew={() => {}}>
+        {channels?.map((item) => (
+          <SidebarItem
+            key={item._id}
+            label={item.name}
+            icon={HashIcon}
+            id={item._id}
+          />
+        ))}
+      </WorkspaceSection>
+      <WorkspaceSection
+        label="Direct Messages"
+        hint="New direct message"
+        onNew={() => {}}
+      >
+        {members?.map((item) => (
+          <UserItem
+            key={item._id}
+            id={item._id}
+            label={item.user.name}
+            image={item.user.image}
+          />
+        ))}
+      </WorkspaceSection>
     </div>
   );
 }
