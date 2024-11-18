@@ -1,18 +1,22 @@
-"use client"
+"use client";
 
-import CreateWorksapceModal from "@/features/workspaces/components/createWorksapceModal"
-import { useEffect, useState } from "react"
+import CreateChannelModal from "@/features/channels/components/createChannelModal";
+import CreateWorksapceModal from "@/features/workspaces/components/CreateWorksapceModal";
+import { useEffect, useState } from "react";
 const Modals = () => {
-    const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-    if (!mounted) return null;
+  if (!mounted) return null;
   return (
-    <CreateWorksapceModal />
-  )
-}
+    <>
+      <CreateChannelModal />
+      <CreateWorksapceModal />
+    </>
+  );
+};
 
-export default Modals
+export default Modals;

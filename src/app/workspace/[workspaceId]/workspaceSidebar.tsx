@@ -14,9 +14,13 @@ import useGetChannels from "@/features/channels/api/useGetChannels";
 import WorkspaceSection from "./workspaceSection";
 import UseGetMembers from "@/features/members/api/useGetMembers";
 import UserItem from "./userItem";
+import { useCreateChannelModal } from "@/features/channels/store/useCreateChannelModal";
 
 export default function WorkspaceSidebar() {
   const workspaceId = useWorkspaceId();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_open, setOpen] = useCreateChannelModal();
 
   const { data: member, isLoading: memberLoading } = useCurrentMember({
     workspaceId,
@@ -25,10 +29,12 @@ export default function WorkspaceSidebar() {
     id: workspaceId,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: channels, isLoading: channelsLoading } = useGetChannels({
     workspaceId,
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: members, isLoading: membersLoading } = UseGetMembers({
     workspaceId,
   });
@@ -59,7 +65,7 @@ export default function WorkspaceSidebar() {
         <SidebarItem label="Threads" icon={MessageSquareText} id="threads" />
         <SidebarItem label="Draft & sent" icon={SendHorizonal} id="drafts" />
       </div>
-      <WorkspaceSection label="Channels" hint="New channel" onNew={() => {}}>
+      <WorkspaceSection label="Channels" hint="New channel" onNew={member.role === "admin" ? () => setOpen(true) : () => {}}>
         {channels?.map((item) => (
           <SidebarItem
             key={item._id}
