@@ -32,7 +32,7 @@ export default function JoinPage() {
       { workspaceId, joinCode: value },
       {
         onSuccess: (id) => {
-          router.replace(`/workspaces/${id}`);
+          router.replace(`/workspace/${id}`);
           toast.success("Workspace joined");
         },
         onError: () => {

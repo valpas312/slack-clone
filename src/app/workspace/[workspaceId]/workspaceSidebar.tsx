@@ -15,8 +15,10 @@ import WorkspaceSection from "./workspaceSection";
 import UseGetMembers from "@/features/members/api/useGetMembers";
 import UserItem from "./userItem";
 import { useCreateChannelModal } from "@/features/channels/store/useCreateChannelModal";
+import useChannelId from "@/hooks/useChannelId";
 
 export default function WorkspaceSidebar() {
+  const channelId = useChannelId();
   const workspaceId = useWorkspaceId();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,6 +74,7 @@ export default function WorkspaceSidebar() {
             label={item.name}
             icon={HashIcon}
             id={item._id}
+            variant={channelId === item._id ? "active" : "default"}
           />
         ))}
       </WorkspaceSection>
